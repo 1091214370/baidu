@@ -24,7 +24,12 @@ var btn=document.getElementById('button');
 btn.onclick=function (){
 	var aqiin=document.getElementById('aqi-input').value;
 	var aqidis=document.getElementById('aqi-display');
-	aqidis.innerHTML=aqiin;
+	if(aqiin==""){
+		alert("请输入北京今天空气质量。");
+	}
+	else{
+		aqidis.innerHTML=aqiin;
+	}
 }
 })();
 
