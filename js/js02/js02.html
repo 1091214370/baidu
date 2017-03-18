@@ -37,15 +37,18 @@ var aqiData = [
   var aqiul=document.getElementById('aqi-list');
   var b=aqiData.filter(function(a){return a[1]>60;});//选择出空气质量大于60的城市，赋值给数组b
   //对空气质量指数由大到小排序(冒泡)
-     for(var i=0;i<b.length;i++){
-      for(var j=i;j<b.length;j++){
-        if(b[j][1]>b[i][1]){
-        var r=b[i];
-        b[i]=b[j];
-        b[j]=r;
-      }
-      }
-     }
+     // for(var i=0;i<b.length;i++){
+     //  for(var j=i;j<b.length;j++){
+     //    if(b[j][1]>b[i][1]){
+     //    var r=b[i];
+     //    b[i]=b[j];
+     //    b[j]=r;
+     //  }
+     //  }
+     // }；
+     b.sort(function(a,c){
+      return c[1]-a[1];
+     });
   (function wirte(){    //输出
     for(var i=0;i<b.length;i++){
       var r;
