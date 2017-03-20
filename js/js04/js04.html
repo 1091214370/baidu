@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百度前端学院JS任务四</title>
+	<style>
+	body{margin:0;padding:0;}
+	ul{width:500px;height:100px;margin:30px auto ;}
+	li{list-style: none;}
+	input{height:30px;}
+	span{background: red;width:auto;height: 40px;text-align: center;padding: 2px;font-size: 25px;margin: 5px;display: block;float: left;}
+	footer{width:100%;height:50px;text-align: center;color: red;}
+	.btn{width:60px;margin-left: 10px;}
+	#dis{width:500px;height:auto;min-height:100px;margin:30px auto;padding:10px;border:1px black solid;overflow: hidden;}
+	</style>
+</head>
+<body>
+	<ul>
+		<li><input type="text" id="innum" placeholder="请输入数字" >
+		<input type="button" class="btn" value="左侧入">
+		<input type="button" class="btn" value="右侧入">
+		<input type="button" class="btn" value="左侧出">
+		<input type="button" class="btn" value="左侧出"></li>
+	</ul>
+	<div id="dis"></div>
+	<footer>*若单个数字输入过长，部分会被隐藏*</footer>
+	<script>
+	var innum=document.getElementById('innum');
+	var btns=document.getElementsByClassName('btn');
+	var dis=document.getElementById('dis');
+	var disArray=new Array();
+	for(let i=0;i<btns.length;i++){
+		btns[i].onclick=function(){
+			//判断堆栈是否有内容
+			if(dis.innerHTML==""&&i>1){
+				alert("堆栈啥都没有，请先添加！");
+			}
+			//判断输入按钮点击时，input内容是否为空
+			if(innum.value==""&&i<2){
+				alert("输入框不能为空！");
+			}else{
+				//判断输入的是否为数字
+				if(!isNaN(innum.value)){
+					//执行函数不同按钮点击函数
+					difBtn(i);
+					//栈内容的更新
+					freArray();
+				}else{
+					alert("请输入数字！");
+				}
+			}
+			innum.value="";
+		}
+	}
+	//不同按钮执行不同的功能
+		//功能由上至下分别为左入、右入、左出和右出
+	function difBtn(x){
+		
+		switch(x){
+			case 0:
+			disArray.unshift(innum.value)
+			break;
+			case 1:
+			disArray.push(innum.value)
+			break;
+			case 2:
+			disArray.shift()
+			break;
+			case 3:
+			disArray.pop()
+			break;
+		}
+	}
+	//更新栈的显示结果
+	function freArray(){
+		dis.innerHTML="";
+		disArray.forEach(value=>{
+			var disSpan=document.createElement("span");
+			dis.append(disSpan);
+			disSpan.innerHTML=value;
+		});
+	}
+	</script>
+</body>
+</html>
