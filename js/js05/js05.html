@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百度前端学院JS任务五</title>
+	<style>
+	body{margin:0;padding:0;}
+	ul{width:500px;height:100px;margin:30px auto ;}
+	li{list-style: none;}
+	input{height:30px;}
+	span{background: red;width:10px;margin-left: 2px;display: block;float: left;}
+	.btn{width:60px;margin-left: 10px;}
+	#dis{width:750px;height:100px;margin:30px auto;border:1px black solid;overflow: hidden;}
+	</style>
+</head>
+<body>
+	<ul>
+		<li><input type="text" id="innum" placeholder="请输入数字：10-100之间" >
+		<input type="button" class="btn" value="左侧入">
+		<input type="button" class="btn" value="右侧入">
+		<input type="button" class="btn" value="左侧出">
+		<input type="button" class="btn" value="右侧出"></li>
+	</ul>
+	<div id="dis"></div>
+	<script>
+	var innum=document.getElementById('innum');
+	var btns=document.getElementsByClassName('btn');
+	var dis=document.getElementById('dis');
+	var disArray=new Array();
+	for(var a=0;a<59;a++){
+		disArray[a]=10;
+	}
+	for(let i=0;i<btns.length;i++){
+		btns[i].onclick=function(){
+			//判断堆栈是否有内容
+			if(disArray.length==0&&i>1){
+				alert("堆栈啥都没有，请先添加！");
+			}
+			//判断输入按钮点击时，input内容是否为空
+			if(innum.value==""&&i<2){
+				alert("输入框不能为空！");
+			}else{
+				if (disArray.length>60&&i<2) {
+					alert("队列元素不能超过60个！");
+				}else{
+					//判断输入的是否为数字
+					if(!isNaN(innum.value)){
+						var pas=parseInt(innum.value);
+						if(pas<10||pas>100){
+							alert("请保证输入的内容在10-100之间！")
+						}else{
+								//执行函数不同按钮点击函数
+								difBtn(i);
+								//栈内容的更新
+								freArray();
+								//定义高度
+								freHeignt();
+							}
+					}else{
+						alert("请输入数字！");
+					}
+				}
+			}
+			innum.value="";
+		}
+	}
+	//不同按钮执行不同的功能
+		//功能由上至下分别为左入、右入、左出和右出
+	function difBtn(x){
+		
+		switch(x){
+			case 0:
+			disArray.unshift(innum.value)
+			break;
+			case 1:
+			disArray.push(innum.value)
+			break;
+			case 2:
+			disArray.shift()
+			break;
+			case 3:
+			disArray.pop()
+			break;
+		}
+	}
+	//更新栈的显示结果
+	function freArray(){
+		dis.innerHTML="";
+		disArray.forEach(function(){
+					var disSpan=document.createElement("span");
+					dis.append(disSpan);}
+		);	
+	}
+	//画柱状图
+	function freHeignt(){
+		var spanH=document.getElementsByTagName('span');
+		for(var z=0;z<disArray.length;z++){
+			spanH[z].style.height=disArray[z]+'px';
+			spanH[z].style.marginTop=(100-disArray[z])+'px';
+		}
+	}
+	</script>
+</body>
+</html>
