@@ -45,6 +45,8 @@
 					difBtn(i);
 					//栈内容的更新
 					freArray();
+					//点击哪个删除哪个
+					autoDel();
 				}else{
 					alert("请输入数字！");
 				}
@@ -79,6 +81,19 @@
 			dis.append(disSpan);
 			disSpan.innerHTML=value;
 		});
+		
+	}
+	//删除点击位置的元素
+	function autoDel(){
+		for(let p=0;p<disArray.length;p++){
+			var  spans=document.getElementsByTagName('span');
+			spans[p].onclick=function(){
+				alert(p);
+				disArray.splice(p,1);
+				freArray();//更新栈内容
+				autoDel();//回调自己
+			}
+		}
 	}
 	</script>
 </body>
