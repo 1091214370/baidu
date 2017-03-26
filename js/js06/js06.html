@@ -15,6 +15,7 @@
 	.main ul li{width:300px;height:40px;margin-top:10px;}
 	#sea{width:200px;}
 	.dis{width:800px;height:100px;margin:80px auto;border:1px black solid;overflow: hidden;}
+	.white{color: white;padding: 0;margin:0;width:auto;height: auto;}
 	</style>
 </head>
 <body>
@@ -38,6 +39,7 @@
 	var text=document.getElementById('inData');
 	var inputBtns=document.getElementsByTagName('input');
 	var dis=document.getElementById('dis');
+	var  spans=document.getElementsByTagName('span');
 	var disArray=new Array();
 	for(let i=0;i<(inputBtns.length-2);i++){
 		inputBtns[i].onclick=function(){
@@ -64,7 +66,7 @@
 		}
 	}
 	//点击检索
-	inputBtns[5].onclick=search();
+	inputBtns[5].onclick
 	//判定输入内容
 	function inArray(x){
 		var testOne=/[\r,\s]/gm;
@@ -114,7 +116,7 @@
 	//删除点击位置的元素
 	function autoDel(){
 		for(let p=0;p<disArray.length;p++){
-			var  spans=document.getElementsByTagName('span');
+			
 			spans[p].onclick=function(){
 				disArray.splice(p,1);
 				freArray();//更新栈内容
@@ -123,7 +125,20 @@
 		}
 	}
 	//查询函数
-	function search(){
+	//点击检索
+	inputBtns[5].onclick=function(){
+		if(inputBtns[4].value==""){
+			alert("请输入检索内容！");
+		}else{
+			if(disArray.length==0){
+				alert("堆栈啥都没有，请先添加！");
+			}else{
+				disArray.forEach(function(x,i,a){
+					a[i]=a[i].replace(inputBtns[4].value,'<span class="white">$&</span>');
+				});	
+				freArray();
+			}
+		}	
 	}
 	</script>
 </body>
