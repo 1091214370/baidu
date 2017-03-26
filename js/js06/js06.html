@@ -69,8 +69,8 @@
 	inputBtns[5].onclick
 	//判定输入内容
 	function inArray(x){
-		var testOne=/[\r,\s]/gm;
-		var testMore=/[\r,\s]\b|$/gm;
+		var testOne=/[\r,\s，、]/gm;
+		var testMore=/[\r,\s，、]/gm;
 		//检测是否为多个数据
 		if(testOne.test(text.value)){
 			//多个数据
