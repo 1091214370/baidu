@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>百度前端学院js任务六</title>
+	<style>
+	body{margin:0;padding: 0;}
+	li{list-style:none;}
+	textarea{float:left;display: block;resize: none;outline: none;font-size: 15px}
+	input{width:100px;height:40px;padding:2px;font-size: 15px;}
+	p{color: red;font-size: 15px;width:400px;margin:0 auto;}
+	span{width:auto;height:30px;margin:2px 0 0 5px;background: red;display: block;float:left;text-align: center;font-size: 20px;padding: 2px;}
+	.main{width:800px;height:300px;margin:10px auto;}
+	.main ul{width:300px;height:300px; float:right;display: block;}
+	.main ul li{width:300px;height:40px;margin-top:10px;}
+	#sea{width:200px;}
+	.dis{width:800px;height:100px;margin:80px auto;border:1px black solid;overflow: hidden;}
+	</style>
+</head>
+<body>
+	<div class="main">
+	<!-- 数据输入区域 -->
+		<textarea name="inData" id="inData" cols="50" rows="20" placeholder="在此输入数据,允许一次批量输入多个内容，格式可以为数字、中文、英文等，可以通过用回车，逗号（全角半角均可），顿号，空格（全角半角、Tab等均可）等符号作为不同内容的间隔."></textarea>
+		<ul>
+			<li><input type="button" value="左侧入"></li>
+			<li><input type="button" value="右侧入"></li>
+			<li><input type="button" value="左侧出"></li>
+			<li><input type="button" value="右侧出"></li>
+			<li>检索：<input type="text" placeholder="输入检索内容" id="sea" size="25"></li>
+			<li><input type="button" id="seaBtn" value="检索"></li>
+		</ul>
+	</div>
+	<div class="dis" id="dis">
+	<!-- 数据展示区域 -->	
+	</div>
+	<p> *上方区域数据展示范围有限，过多会被隐藏*</p>
+	<script>
+	var text=document.getElementById('inData');
+	var inputBtns=document.getElementsByTagName('input');
+	var dis=document.getElementById('dis');
+	var disArray=new Array();
+	for(let i=0;i<(inputBtns.length-2);i++){
+		inputBtns[i].onclick=function(){
+			//判断堆栈是否有内容
+			if(disArray.length==0&&i>1){
+				alert("堆栈啥都没有，请先添加！");
+			}
+			//判断输入按钮点击时，input内容是否为空
+			if(text.value==""&&i<2){
+				alert("输入框不能为空！");
+			}else{
+				if (disArray.length>60&&i<2) {
+					alert("队列元素不能超过60个！");
+				}else{
+					//执行函数不同按钮点击函数
+					inArray(i);
+					//栈内容的更新
+					freArray();
+					//点击哪个删除哪个
+					autoDel();
+				}
+			}
+			text.value="";
+		}
+	}
+	//点击检索
+	inputBtns[5].onclick=search();
+	//判定输入内容
+	function inArray(x){
+		var testOne=/[\r,\s]/gm;
+		var testMore=/[\r,\s]\b|$/gm;
+		//检测是否为多个数据
+		if(testOne.test(text.value)){
+			//多个数据
+			if(testMore.test(text.value)){
+			var value=text.value.split(testMore).map(function(i){return i;});
+			value.forEach(i=>{difBtn(x,i);});
+			}else{
+				alert("您输入的格式有误，多个数据间的分割标志不合法！");
+			}
+		}else{
+			//单个数据
+			difBtn(x,text.value);
+		}
+		
+	}
+	//将输入内容写入数组
+	function difBtn(x,value){
+		
+		switch(x){
+			case 0:
+			disArray.unshift(value)
+			break;
+			case 1:
+			disArray.push(value)
+			break;
+			case 2:
+			disArray.shift()
+			break;
+			case 3:
+			disArray.pop()
+			break;
+		}
+	}
+	//更新栈的显示结果
+	function freArray(){
+		dis.innerHTML="";
+		disArray.forEach(x=>{
+					var disSpan=document.createElement("span");
+					dis.append(disSpan);
+					disSpan.innerHTML=x;
+				});	
+	}
+	//删除点击位置的元素
+	function autoDel(){
+		for(let p=0;p<disArray.length;p++){
+			var  spans=document.getElementsByTagName('span');
+			spans[p].onclick=function(){
+				disArray.splice(p,1);
+				freArray();//更新栈内容
+				autoDel();//回调自己
+			}
+		}
+	}
+	//查询函数
+	function search(){
+	}
+	</script>
+</body>
+</html>
