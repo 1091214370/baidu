@@ -25,36 +25,41 @@
 		</ul>
 	</form>
 	<script type="text/javascript">
-		var text=document.getElementById('text');
 		var btn=document.getElementById('btn');
 		var tip=document.getElementById('tip');
-		var excn=/[^\x00-\xff]{1,}/g;
-		var exen=/\w{1,}/g;
 		btn.onclick=function(){
+			var text=document.getElementById('text');
 			if(text.value==""){
-			text.style.border="2px solid red";
-			tip.style.color="red";
-			tip.innerHTML="姓名不能为空";
+				text.style.border="2px solid red";
+				tip.style.color="red";
+				tip.innerHTML="姓名不能为空";
 			}else{
-				var cn=excn.exec(text.value);
-				var en=exen.exec(text.value);
-				if(cn==null){
-					cn="";
-				}
-				if(en==null){
-					en="";
-				}
-				var len=cn.toString().length*2+en.toString().length;
-				if(len>3&&len<17){
-					text.style.border="2px solid #90EE90";
-					tip.style.color="#90EE90";
-					tip.innerHTML="名称格式正确";
-				}else{
-					text.style.border="2px solid red";
-					tip.style.color="red";
-					tip.innerHTML="长度为4~16个字符";
-				}
-			}
+				test(text.value);
+			};
+		}
+		function test(i){
+			var excn=/[^\x00-\xff]{1,}/g;
+			var exen=/\w{1,}/g;
+			var cn=excn.exec(i);
+			var en=exen.exec(i);
+			if(cn==null){
+				cn="";
+			};
+			if(en==null){
+				en="";
+			};
+			var len=cn.toString().length*2+en.toString().length;
+			if(len>3&&len<17){
+				alert(1);
+				text.style.border="2px solid #90EE90";
+				tip.style.color="#90EE90";
+				tip.innerHTML="名称格式正确";
+			}else{
+				alert(2);
+				text.style.border="2px solid red";
+				tip.style.color="red";
+				tip.innerHTML="长度为4~16个字符";
+			};
 		}
 	</script>
 </body>
