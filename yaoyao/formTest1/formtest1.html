@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>单个表单验证</title>
+	<style>
+		form{width:600px;height: 200px;position: relative;margin:100px auto;}
+		ul{width:600px;height:150px;margin:0;padding: 0;}
+		li{list-style: none;width:600px;height:100px;margin:10px auto;padding: 0;text-align: center;}
+		.text{width:350px;height:40px;border:2px solid #B5B5B5;border-radius: 10px;margin:0 20px 0 40px;padding: 5px;font-size: 20px;outline: medium;}
+		/*outline: medium;去除点击后的外边框*/
+		.btn{width:70px;height:50px;background-color: #6495ED;border:none;border-radius: 8px;color:white;font-size:18px;outline: medium;}
+		.tip{margin-left:110px;margin-top:10px;color:#B5B5B5;text-align: left;}
+	</style>
+</head>
+<body>
+	<form>
+		<ul>
+			<li>
+				<span><b>名称</b></span>
+				<input type="text" class="text" id="text"/>
+				<input type="button" class="btn" id="btn" value="验证">
+				<div class="tip" id="tip">必填，长度为4~16个字符</div>
+			</li>
+		</ul>
+	</form>
+	<script type="text/javascript">
+		var text=document.getElementById('text');
+		var btn=document.getElementById('btn');
+		var tip=document.getElementById('tip');
+		var excn=/[^\x00-\xff]{1,}/g;
+		var exen=/\w{1,}/g;
+		btn.onclick=function(){
+			if(text.value==""){
+			text.style.border="2px solid red";
+			tip.style.color="red";
+			tip.innerHTML="姓名不能为空";
+			}else{
+				var cn=excn.exec(text.value);
+				var en=exen.exec(text.value);
+				if(cn==null){
+					cn="";
+				}
+				if(en==null){
+					en="";
+				}
+				var len=cn.toString().length*2+en.toString().length;
+				if(len>3&&len<17){
+					text.style.border="2px solid #90EE90";
+					tip.style.color="#90EE90";
+					tip.innerHTML="名称格式正确";
+				}else{
+					text.style.border="2px solid red";
+					tip.style.color="red";
+					tip.innerHTML="长度为4~16个字符";
+				}
+			}
+		}
+	</script>
+</body>
+</html>
